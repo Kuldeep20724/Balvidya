@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>Animal Sound Game | BalVidya</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body { background: linear-gradient(to right, #f8ffae, #43c6ac); font-family: 'Segoe UI', sans-serif; padding: 20px; text-align: center; }
+    .title { font-size: 2rem; font-weight: bold; color: #0275d8; margin-bottom: 20px; }
+    .option-btn { width: 200px; margin: 10px; font-size: 1.2rem; }
+    .score-timer { font-size: 1.2rem; margin-bottom: 15px; }
+    .animal-img { width: 200px; height: 200px; object-fit: contain; margin: 20px auto; display: none; }
+    .control-btn { margin: 15px; }
+  </style>
+</head>
+<body>
+
+<div class="title">🐾 जानवर की आवाज़ पहचानें</div>
+
+<div class="score-timer">
+  🧠 स्कोर: <span id="score">0</span> | ⏱️ समय: <span id="timer">10</span> सेकंड
+</div>
+
+<button class="btn btn-primary control-btn" onclick="playCurrentSound()">🎧 आवाज़ चलाएँ</button>
+<button class="btn btn-outline-dark control-btn" onclick="startVoiceRecognition()">🎙️ बोलकर जवाब दें</button>
+
+<div id="options" class="row justify-content-center">
+  <!-- विकल्प बटन यहाँ आएंगे -->
+</div>
+
+<img id="animalImage" class="animal-img" alt="Animal">
+
+<div class="mt-3">
+  <button class="btn btn-success control-btn" onclick="startGame()">🔁 नया प्रश्न</button>
+  <button class="btn btn-secondary control-btn" onclick="goBack()">🎮 Back to Games</button>
+</div>
+</div>
+  </div>
+<script>
+  const animals = [
+    { name: 'कुत्ता', key: 'dog', sound: 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_4f1b289e9c.mp3', img: 'https://cdn-icons-png.flaticon.com/512/616/616408.png' },
+    { name: 'बिल्ली', key: 'cat', sound: 'https://cdn.pixabay.com/download/audio/2022/03/28/audio_5b9c99b91c.mp3', img: 'https://cdn-icons-png.flaticon.com/512/616/616430.png' },
+    { name: 'गाय', key: 'cow', sound: 'https://cdn.pixabay.com/download/audio/2022/03/03/audio_445efb1445.mp3', img: 'https://cdn-icons-png.flaticon.com/512/1998/1998619.png' },
+    { name: 'शेर', key: 'lion', sound: 'https://cdn.pixabay.com/download/audio/2022/04/06/audio_9e9c16ef3a.mp3', img: 'https://cdn-icons-png.flaticon.com/512/1998/1998616.png' }
+  ];
+
+  let currentAnimal = null;
+  let score = 0, timeLeft = 10, countdown;
+
+  function speak(text) {
+    const msg = new SpeechSynthesisUtterance(text);
+    msg.lang = 'hi-IN';
+    window.speechSynthesis.speak(msg);
+  }
+
+  function playCurrentSound() {
+    if (currentAnimal) new Audio(currentAnimal.sound).play();
+  }
+
+  function loadOptions() {
+    const shuffled = [...animals].sort(() => 0.5 - Math.random());
+    const optionsDiv = document.getElementById('options');
+    optionsDiv.innerHTML = '';
+    shuffled.forEach(animal => {
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-light option-btn';
+      btn.innerText = animal.name;
+      btn.onclick = () => checkAnswer(animal.key, animal.name);
+      optionsDiv.appendChild(btn);
+    });
+  }
+
+  function checkAnswer(selectedKey, selectedName) {
+    clearInterval(countdown);
+    document.getElementById('timer').textContent = '0';
+    document.getElementById('animalImage').src = currentAnimal.img;
+    document.getElementById('animalImage').style.display = 'block';
+
+    if (selectedKey === currentAnimal.key) {
+      score++;
+      document.getElementById('score').textContent = score;
+      speak('सही उत्तर! ' + selectedName);
+      Swal.fire({ icon: 'success', title: '✅ सही!', text: `'${selectedName}' ठीक है!`, timer: 1500, showConfirmButton: false });
+    } else {
+      speak('गलत उत्तर। यह ' + currentAnimal.name + ' था।');
+      Swal.fire({ icon: 'error', title: '❌ गलत!', text: `यह '${currentAnimal.name}' की आवाज़ थी।`, timer: 2000, showConfirmButton: false });
+    }
+  }
+
+  function startTimer() {
+    timeLeft = 10;
+    document.getElementById('timer').textContent = timeLeft;
+    countdown = setInterval(() => {
+      timeLeft--;
+      document.getElementById('timer').textContent = timeLeft;
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        speak('समय समाप्त! यह ' + currentAnimal.name + ' था।');
+        Swal.fire({ icon: 'warning', title: '⏰ समय समाप्त!', text: `इसका जवाब नहीं दिया गया। यह '${currentAnimal.name}' था।`, timer: 2000, showConfirmButton: false });
+        document.getElementById('animalImage').src = currentAnimal.img;
+        document.getElementById('animalImage').style.display = 'block';
+      }
+    }, 1000);
+  }
+
+  function startGame() {
+    currentAnimal = animals[Math.floor(Math.random() * animals.length)];
+    document.getElementById('animalImage').style.display = 'none';
+    playCurrentSound();
+    loadOptions();
+    startTimer();
+  }
+
+  // voice recognition using Web Speech API
+  function startVoiceRecognition() {
+    if (!('webkitSpeechRecognition' in window)) {
+      Swal.fire({ icon: 'error', title: 'माइक्रोफोन असमर्थ', text: 'आपका ब्राउज़र Web Speech API सपोर्ट नहीं करता।' });
+      return;
+    }
+    const recognition = new webkitSpeechRecognition();
+    recognition.lang = 'hi-IN';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    recognition.start();
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript.toLowerCase();
+      const matched = animals.find(a => transcript.includes(a.name));
+      if (matched) checkAnswer(matched.key, matched.name);
+      else Swal.fire({ icon: 'info', title: 'समझ नहीं आया', text: 'कृपया फिर से बोलें' });
+    };
+    recognition.onerror = () => {
+      Swal.fire({ icon: 'error', title: 'त्रुटि हुई', text: 'फिर से प्रयास करें' });
+    };
+  }
+
+  function goBack() { window.location.href = 'games.html'; }
+
+  window.onload = startGame;
+</script>
+
+</body>
+</html>

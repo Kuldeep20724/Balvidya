@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BalVidya | Jigsaw Puzzle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #f2f2f2; font-family: sans-serif; }
+    h1 { font-size: 1.8rem; }
+    #puzzle-container { display: grid; margin-top: 20px; touch-action: none; }
+    .piece {
+      border: 1px solid #ccc;
+      background-size: cover;
+      background-repeat: no-repeat;
+      touch-action: none;
+    }
+    #upload-preview { display: none; max-width: 100%; margin-top: 10px; }
+    #timer { font-weight: bold; color: #444; }
+    .hint-img {
+      position: absolute;
+      z-index: 0;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body >
+ <header>BalVidya Puzzle Game</header> 
+    <br>
+  </div>
+  <div class="text-center mb-3">
+    <input type="file" id="imageInput" class="form-control w-auto d-inline-block">
+    <select id="difficulty" class="form-select w-auto d-inline-block ms-2">
+      <option value="3">3x3</option>
+      <option value="4" selected>4x4</option>
+      <option value="6">6x6</option>
+    </select>
+    <button class="btn btn-primary mx-1" onclick="shufflePuzzle()">Shuffle</button>
+    <button class="btn btn-success mx-1" onclick="savePuzzle()">Save</button>
+    <button class="btn btn-warning mx-1" onclick="loadPuzzle()">Load</button>
+    <button class="btn btn-secondary mx-1" onclick="toggleHint()">Hint</button>
+  </div>
+
+  <div class="text-center mb-2">
+    <span id="timer">⏱️ Time: 0s</span> |
+    <span id="best-time">🏆 Best: 0s</span>
+  </div>
+
+  <div id="puzzle-wrapper" class="position-relative text-center">
+    <img id="hintImage" class="hint-img d-none">
+    <div id="puzzle-container" class="mx-auto" style="max-width: 90vw;"></div>
+  </div>
+
+  <audio id="clickSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1d6fffe511.mp3" preload="auto"></audio>
+  <audio id="winSound" src="https://cdn.pixabay.com/download/audio/2021/09/01/audio_49dcabb409.mp3" preload="auto"></audio>
+   <div class="text-center mb-4">
+      <a href="games.html" class="btn btn-outline-primary">🎮 Back to Games</a>
+  <script>
+    const container = document.getElementById('puzzle-container');
+    const imageInput = document.getElementById('imageInput');
+    const difficultySelect = document.getElementById('difficulty');
+    const hintImage = document.getElementById('hintImage');
+    const timerEl = document.getElementById('timer');
+    const bestTimeEl = document.getElementById('best-time');
+    let originalImage = null, gridSize = 4, pieces = [], timer = 0, interval;
+    const clickSound = document.getElementById('clickSound');
+    const winSound = document.getElementById('winSound');
+
+    imageInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        originalImage = evt.target.result;
+        setupPuzzle();
+      };
+      reader.readAsDataURL(file);
+    });
+
+    difficultySelect.addEventListener('change', () => {
+      gridSize = parseInt(difficultySelect.value);
+      if (originalImage) setupPuzzle();
+    });
+
+    function setupPuzzle() {
+      clearInterval(interval);
+      timer = 0;
+      updateTimer();
+      hintImage.classList.add('d-none');
+      container.innerHTML = '';
+      pieces = [];
+
+      const size = gridSize;
+      container.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+      container.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+
+      const total = size * size;
+      for (let i = 0; i < total; i++) {
+        const div = document.createElement('div');
+        div.className = 'piece';
+        div.style.aspectRatio = '1';
+        div.dataset.index = i;
+        pieces.push(div);
+      }
+
+      pieces.forEach((piece, index) => {
+        const x = index % size;
+        const y = Math.floor(index / size);
+        piece.style.backgroundImage = `url(${originalImage})`;
+        piece.style.backgroundSize = `${size * 100}% ${size * 100}%`;
+        piece.style.backgroundPosition = `${(x * 100) / (size - 1)}% ${(y * 100) / (size - 1)}%`;
+        piece.draggable = true;
+
+        // Touch support:
+        piece.addEventListener('touchstart', dragStart, { passive: false });
+        piece.addEventListener('touchend', dragEnd);
+        piece.addEventListener('touchmove', drag);
+
+        // Mouse drag
+        piece.addEventListener('dragstart', dragStart);
+        piece.addEventListener('dragover', e => e.preventDefault());
+        piece.addEventListener('drop', dragDrop);
+      });
+
+      shuffle(pieces);
+      pieces.forEach(piece => container.appendChild(piece));
+
+      document.getElementById('hintImage').src = originalImage;
+      interval = setInterval(() => {
+        timer++;
+        updateTimer();
+      }, 1000);
+    }
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+    }
+
+    let dragged;
+
+    function dragStart(e) {
+      dragged = e.target;
+    }
+
+    function dragDrop(e) {
+      if (e.target.classList.contains('piece') && e.target !== dragged) {
+        clickSound.play();
+        container.insertBefore(dragged, e.target);
+        container.insertBefore(e.target, pieces[container.children.length]);
+        checkWin();
+      }
+    }
+
+    function drag(e) {
+      e.preventDefault();
+    }
+
+    function dragEnd() {
+      checkWin();
+    }
+
+    function checkWin() {
+      const children = Array.from(container.children);
+      const correct = children.every((el, i) => parseInt(el.dataset.index) === i);
+      if (correct) {
+        clearInterval(interval);
+        winSound.play();
+        alert('🎉 Puzzle Completed!');
+        const best = parseInt(localStorage.getItem('bestTime') || '0');
+        if (best === 0 || timer < best) {
+          localStorage.setItem('bestTime', timer);
+        }
+        updateTimer();
+      }
+    }
+
+    function updateTimer() {
+      timerEl.textContent = `⏱️ Time: ${timer}s`;
+      const best = localStorage.getItem('bestTime');
+      if (best) bestTimeEl.textContent = `🏆 Best: ${best}s`;
+    }
+
+    function savePuzzle() {
+      const order = Array.from(container.children).map(el => el.dataset.index);
+      localStorage.setItem('puzzleOrder', JSON.stringify(order));
+      localStorage.setItem('puzzleImage', originalImage);
+      localStorage.setItem('puzzleGrid', gridSize);
+      alert('✅ Puzzle saved!');
+    }
+
+    function loadPuzzle() {
+      const saved = JSON.parse(localStorage.getItem('puzzleOrder') || '[]');
+      const img = localStorage.getItem('puzzleImage');
+      const grid = parseInt(localStorage.getItem('puzzleGrid') || '4');
+      if (!img || !saved.length) return alert('⚠️ No saved puzzle found.');
+      originalImage = img;
+      difficultySelect.value = grid;
+      gridSize = grid;
+      setupPuzzle();
+      setTimeout(() => {
+        const ordered = [];
+        saved.forEach(i => {
+          const match = pieces.find(p => parseInt(p.dataset.index) === i);
+          ordered.push(match);
+        });
+        container.innerHTML = '';
+        ordered.forEach(p => container.appendChild(p));
+      }, 300);
+    }
+
+    function shufflePuzzle() {
+      if (!originalImage) return;
+      shuffle(pieces);
+      container.innerHTML = '';
+      pieces.forEach(p => container.appendChild(p));
+    }
+
+    function toggleHint() {
+      hintImage.classList.toggle('d-none');
+    }
+  </script>
+</body>
+</html>

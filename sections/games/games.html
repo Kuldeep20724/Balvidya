@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Games | BalVidya</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
+
+  <style>
+    body {
+      background: #f9fff0;
+      font-family: 'Poppins', 'Baloo 2', sans-serif;
+
+    }
+
+    .navbar {
+      background-color: #aaff77;
+    }
+
+    .logo-text {
+      font-weight: bold;
+      font-size: 22px;
+      color: #2c5f2d;
+    }
+
+    .card {
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .icon-box {
+      font-size: 40px;
+    }
+
+    footer {
+      background: #ddffcc;
+      padding: 10px;
+      text-align: center;
+      color: #444;
+    }
+
+    a.card {
+      color: inherit;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="container">
+    <a href="../../index.html" class="navbar-brand logo-text">⬅️ BalVidya</a>
+    <span class="text-muted d-none d-sm-inline">Play & Learn!</span>
+  </div>
+</nav>
+
+<!-- Page Title -->
+<header class="text-center py-4">
+  <h2 class="fw-bold text-success">🎮 Let's Play!</h2>
+  <p class="text-muted">Choose a game to have fun and learn</p>
+</header>
+
+<!-- Games Grid -->
+<div class="container">
+  <div class="row g-4">
+
+    <div class="col-6 col-md-4">
+      <a href="game-memory.html" class="card p-3">
+        <div class="icon-box text-warning">🧠</div>
+        <h5 class="mt-2">Memory Match</h5>
+        <p class="small text-muted">Find the matching cards</p>
+      </a>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <a href="game-puzzle.html" class="card p-3">
+        <div class="icon-box text-danger">🧩</div>
+        <h5 class="mt-2">Jigsaw Puzzle</h5>
+        <p class="small text-muted">Complete the picture</p>
+      </a>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <a href="game-quiz.html" class="card p-3">
+        <div class="icon-box text-primary">❓</div>
+        <h5 class="mt-2">Quiz Time</h5>
+        <p class="small text-muted">Test your knowledge</p>
+      </a>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <a href="game-dragdrop.html" class="card p-3">
+        <div class="icon-box text-success">🧲</div>
+        <h5 class="mt-2">Drag & Drop</h5>
+        <p class="small text-muted">Match items correctly</p>
+      </a>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <a href="game-maze.html" class="card p-3">
+        <div class="icon-box text-info">🌀</div>
+        <h5 class="mt-2">Maze Game</h5>
+        <p class="small text-muted">Find the way out</p>
+      </a>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <a href="game-sounds.html" class="card p-3">
+        <div class="icon-box text-secondary">🔊</div>
+        <h5 class="mt-2">Guess the Sound</h5>
+        <p class="small text-muted">Identify animal sounds</p>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="mt-5">
+  © 2025 BalVidya | Learn While You Play! 🎲
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

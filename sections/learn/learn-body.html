@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Learn Body Parts - Girl</title>
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      background: #fff6f9;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    h1 {
+      background-color: #ff4f87;
+      color: white;
+      padding: 1rem;
+      margin: 0;
+    }
+    .container {
+      position: relative;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+    .body-image {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+    }
+    .part-label {
+      position: absolute;
+      background: rgba(255,255,255,0.95);
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      font-weight: bold;
+    }
+    .part-label:hover {
+      background-color: #ffd9e8;
+    }
+    .info-box {
+      margin-top: 20px;
+      font-size: 18px;
+      background: #ffe9f3;
+      padding: 12px;
+      border-radius: 10px;
+      display: inline-block;
+      min-width: 220px;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      background-color: #ff4f87;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      margin: 10px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .buttons button:hover {
+      background-color: #ff1e65;
+    }
+  </style>
+</head>
+<body>
+
+<h1>👧 Learn Human Body Parts (Girl)</h1>
+
+<div class="container">
+  <img src="girl-body-labeled.png" alt="Girl Body" class="body-image" />
+
+  <!-- Clickable labels -->
+  <div class="part-label" style="top: 2%; left: 43%;" onclick="showPart('Head', 'सिर')">Head</div>
+  <div class="part-label" style="top: 9%; left: 16%;" onclick="showPart('Hair', 'बाल')">Hair</div>
+  <div class="part-label" style="top: 19%; left: 10%;" onclick="showPart('Ear', 'कान')">Ear (L)</div>
+  <div class="part-label" style="top: 19%; left: 75%;" onclick="showPart('Ear', 'कान')">Ear (R)</div>
+  <div class="part-label" style="top: 21%; left: 50%;" onclick="showPart('Eye', 'आंख')">Eye</div>
+  <div class="part-label" style="top: 27%; left: 45%;" onclick="showPart('Nose', 'नाक')">Nose</div>
+  <div class="part-label" style="top: 31%; left: 48%;" onclick="showPart('Mouth', 'मुंह')">Mouth</div>
+  <div class="part-label" style="top: 38%; left: 30%;" onclick="showPart('Neck', 'गर्दन')">Neck</div>
+  <div class="part-label" style="top: 42%; left: 35%;" onclick="showPart('Chest', 'छाती')">Chest</div>
+  <div class="part-label" style="top: 48%; left: 22%;" onclick="showPart('Elbow', 'कोहनी')">Elbow (L)</div>
+  <div class="part-label" style="top: 48%; left: 65%;" onclick="showPart('Elbow', 'कोहनी')">Elbow (R)</div>
+  <div class="part-label" style="top: 50%; left: 70%;" onclick="showPart('Hand', 'हाथ')">Hand (R)</div>
+  <div class="part-label" style="top: 53%; left: 75%;" onclick="showPart('Fingers', 'उंगलियाँ')">Fingers</div>
+  <div class="part-label" style="top: 60%; left: 30%;" onclick="showPart('Stomach', 'पेट')">Stomach</div>
+  <div class="part-label" style="top: 68%; left: 40%;" onclick="showPart('Leg', 'पैर')">Leg</div>
+  <div class="part-label" style="top: 75%; left: 35%;" onclick="showPart('Knee', 'घुटना')">Knee</div>
+  <div class="part-label" style="top: 85%; left: 40%;" onclick="showPart('Foot', 'पांव')">Foot</div>
+  <div class="part-label" style="top: 88%; left: 32%;" onclick="showPart('Toes', 'पैर की उंगलियाँ')">Toes</div>
+</div>
+
+<div class="info-box" id="info">Click a body part to learn its name</div>
+
+<div class="buttons">
+  <button onclick="goBack()">🔙 Back</button>
+  <button onclick="nextPage()">➡️ Next</button>
+</div>
+
+<script>
+  function showPart(english, hindi) {
+    document.getElementById("info").innerHTML = `<strong>${english}</strong> / <strong>${hindi}</strong>`;
+  }
+
+  function goBack() {
+    // Adjust this link to your actual previous page
+    window.location.href = "learn-fruits.html";
+  }
+
+  function nextPage() {
+    // Adjust this link to your next learning module
+    window.location.href = "learn-clothes.html";
+  }
+</script>
+
+</body>
+</html>

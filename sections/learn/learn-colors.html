@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Learn Colors - BalVidya</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #fff8f0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .color-box {
+      height: 150px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .color-box:hover {
+      transform: scale(1.03);
+    }
+    .color-label {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      color: #fff;
+      font-size: 1.2rem;
+      text-shadow: 1px 1px 3px #000;
+      text-align: center;
+      font-weight: bold;
+    }
+    .quiz-section {
+      display: none;
+    }
+  </style>
+</head>
+<body class="container py-4">
+
+  <h2 class="text-center mb-4">🎨 Learn Colors - BalVidya</h2>
+
+  <div class="text-end mb-3">
+    <button class="btn btn-warning" id="toggleQuiz">🎯 Quiz/Test Mode</button>
+  </div>
+
+  <!-- Learn Mode -->
+  <div id="learnSection" class="row">
+    <!-- Colors will be injected here -->
+  </div>
+
+  <!-- Quiz Mode -->
+  <div id="quizSection" class="quiz-section text-center">
+    <div id="quizColorBox" class="color-box mx-auto" style="width: 200px;"></div>
+    <h4 class="mt-3">What is the name of this color?</h4>
+    <div class="mt-3">
+      <input type="text" id="colorAnswer" class="form-control w-50 mx-auto" placeholder="Enter English name">
+    </div>
+    <button class="btn btn-success mt-3" onclick="checkAnswer()">✅ Submit</button>
+    <p class="mt-2" id="quizResult"></p>
+  </div>
+
+  <div class="text-center mt-5">
+    <a href="/sections/learn.html" class="btn btn-secondary">⬅️ Back</a>
+  </div>
+
+  <script>
+    const colors = [
+      { name: "Red", hindi: "लाल", code: "#FF0000" },
+      { name: "Green", hindi: "हरा", code: "#00FF00" },
+      { name: "Blue", hindi: "नीला", code: "#0000FF" },
+      { name: "Yellow", hindi: "पीला", code: "#FFFF00" },
+      { name: "Orange", hindi: "नारंगी", code: "#FFA500" },
+      { name: "Purple", hindi: "बैंगनी", code: "#800080" },
+      { name: "Black", hindi: "काला", code: "#000000" },
+      { name: "White", hindi: "सफेद", code: "#FFFFFF", textColor: "#000" },
+      { name: "Pink", hindi: "गुलाबी", code: "#FFC0CB" },
+      { name: "Brown", hindi: "भूरा", code: "#A52A2A" }
+    ];
+
+    const learnSection = document.getElementById("learnSection");
+    const quizSection = document.getElementById("quizSection");
+    const toggleQuizBtn = document.getElementById("toggleQuiz");
+
+    colors.forEach(color => {
+      const div = document.createElement("div");
+      div.className = "col-6 col-md-4";
+      div.innerHTML = `
+        <div class="color-box" style="background:${color.code}; color: ${color.textColor || '#fff'}" onclick="speakColor('${color.name}', '${color.hindi}')">
+          <div class="color-label">${color.name} / ${color.hindi}</div>
+        </div>
+      `;
+      learnSection.appendChild(div);
+    });
+
+    function speakColor(english, hindi) {
+      const msg = new SpeechSynthesisUtterance(`${english}. In Hindi, it is ${hindi}`);
+      msg.lang = 'en-IN';
+      window.speechSynthesis.speak(msg);
+    }
+
+    // Quiz Logic
+    let quizIndex = 0;
+    const quizColorBox = document.getElementById("quizColorBox");
+    const colorAnswer = document.getElementById("colorAnswer");
+    const quizResult = document.getElementById("quizResult");
+
+    function showQuizColor() {
+      const color = colors[quizIndex];
+      quizColorBox.style.background = color.code;
+      quizColorBox.style.color = color.textColor || '#fff';
+      colorAnswer.value = '';
+      quizResult.textContent = '';
+    }
+
+    function checkAnswer() {
+      const userAns = colorAnswer.value.trim().toLowerCase();
+      const correct = colors[quizIndex].name.toLowerCase();
+      if (userAns === correct) {
+        quizResult.innerHTML = `<span class="text-success">✅ Correct!</span>`;
+        quizIndex = (quizIndex + 1) % colors.length;
+        setTimeout(showQuizColor, 1500);
+      } else {
+        quizResult.innerHTML = `<span class="text-danger">❌ Try again!</span>`;
+      }
+    }
+
+    toggleQuizBtn.onclick = () => {
+      if (quizSection.style.display === "none") {
+        learnSection.style.display = "none";
+        quizSection.style.display = "block";
+        toggleQuizBtn.textContent = "📖 Learn Mode";
+        showQuizColor();
+      } else {
+        quizSection.style.display = "none";
+        learnSection.style.display = "flex";
+        toggleQuizBtn.textContent = "🎯 Quiz/Test Mode";
+      }
+    };
+  </script>
+</body>
+</html>

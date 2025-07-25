@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Learn Numbers 🔢</title>
+  <style>
+    body {
+      font-family: 'Arial Rounded MT Bold', sans-serif;
+      text-align: center;
+      background: linear-gradient(to bottom, #FFDEE9, #B5FFFC);
+      margin: 0;
+      padding: 10px;
+    }
+
+    h1 {
+      color: #2c3e50;
+      font-size: 1.5rem;
+    }
+
+    .number-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin: 20px 0;
+    }
+
+
+    .number-card {
+      background-color: white;
+      border-radius: 15px;
+      padding: 5px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .number-card:hover {
+      transform: scale(1.1);
+    }
+
+    .number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #e74c3c;
+    }
+
+    .word {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #34495e;
+    }
+
+    button.back-btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      background-color: #2980b9;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 30px;
+    }
+
+    button.back-btn:hover {
+      background-color: #1c5985;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔢 Learn Numbers | संख्या सीखें</h1>
+
+  <div class="number-grid">
+    <!-- Numbers 1 to 10 -->
+    <div class="number-card" onclick="speak('1', 'एक')">
+      <div class="number">1</div>
+      <div class="word">One<br><small>(एक)</small></div>
+    </div>
+    <div class="number-card" onclick="speak('2', 'दो')">
+      <div class="number">2</div>
+      <div class="word">Two<br><small>(दो)</small></div>
+    </div>
+    <div class="number-card" onclick="speak('3', 'तीन')">
+      <div class="number">3</div>
+      <div class="word">Three<br><small>(तीन)</small></div>
+    </div>
+    <div class="number-card" onclick="speak('4', 'चार')">
+      <div class="number">4</div>
+      <div class="word">Four<br><small>(चार)</small></div>
+    </div>
+    <div class="number-card" onclick="speak('5', 'पाँच')">
+      <div class="number">5</div>
+      <div class="word">Five<br><small>(पाँच)</small></div>
+    </div>
+    <div class="number-card" onclick="speak('6', 'छह')">
+      <div class="number">6</div>
+      <div class="word">Six<br><small>(छह)</small></div>
+    </div>
+    <div class="number-card" onclick="speak('7', 'सात')">
+      <div class="number">7</div>
+      <div class="word">Seven<br><small>(सात)</small></div>
+    </div>
+    <div class="number-card" onclick="speak('8', 'आठ')">
+      <div class="number">8</div>
+      <div class="word">Eight<br><small>(आठ)</small></div>
+    </div>
+    <div class="number-card" onclick="speak('9', 'नौ')">
+      <div class="number">9</div>
+      <div class="word">Nine<br><small>(नौ)</small></div>
+    </div>
+    <div class="number-card" onclick="speak('10', 'दस')">
+      <div class="number">10</div>
+      <div class="word">Ten<br><small>(दस)</small></div>
+    </div>
+    <div class="number-card" onclick="speak('11', 'ग्यारह')">
+  <div class="number">11</div>
+  <div class="word">Eleven<br><small>(ग्यारह)</small></div>
+</div>
+<div class="number-card" onclick="speak('12', 'बारह')">
+  <div class="number">12</div>
+  <div class="word">Twelve<br><small>(बारह)</small></div>
+</div>
+<div class="number-card" onclick="speak('13', 'तेरह')">
+  <div class="number">13</div>
+  <div class="word">Thirteen<br><small>(तेरह)</small></div>
+</div>
+<div class="number-card" onclick="speak('14', 'चौदह')">
+  <div class="number">14</div>
+  <div class="word">Fourteen<br><small>(चौदह)</small></div>
+</div>
+<div class="number-card" onclick="speak('15', 'पंद्रह')">
+  <div class="number">15</div>
+  <div class="word">Fifteen<br><small>(पंद्रह)</small></div>
+</div>
+<div class="number-card" onclick="speak('16', 'सोलह')">
+  <div class="number">16</div>
+  <div class="word">Sixteen<br><small>(सोलह)</small></div>
+</div>
+<div class="number-card" onclick="speak('17', 'सत्रह')">
+  <div class="number">17</div>
+  <div class="word">Seventeen<br><small>(सत्रह)</small></div>
+</div>
+<div class="number-card" onclick="speak('18', 'अठारह')">
+  <div class="number">18</div>
+  <div class="word">Eighteen<br><small>(अठारह)</small></div>
+</div>
+<div class="number-card" onclick="speak('19', 'उन्नीस')">
+  <div class="number">19</div>
+  <div class="word">Nineteen<br><small>(उन्नीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('20', 'बीस')">
+  <div class="number">20</div>
+  <div class="word">Twenty<br><small>(बीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('21', 'इक्कीस')">
+  <div class="number">21</div>
+  <div class="word">Twenty-One<br><small>(इक्कीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('22', 'बाईस')">
+  <div class="number">22</div>
+  <div class="word">Twenty-Two<br><small>(बाईस)</small></div>
+</div>
+<div class="number-card" onclick="speak('23', 'तेईस')">
+  <div class="number">23</div>
+  <div class="word">Twenty-Three<br><small>(तेईस)</small></div>
+</div>
+<div class="number-card" onclick="speak('24', 'चौबीस')">
+  <div class="number">24</div>
+  <div class="word">Twenty-Four<br><small>(चौबीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('25', 'पच्चीस')">
+  <div class="number">25</div>
+  <div class="word">Twenty-Five<br><small>(पच्चीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('26', 'छब्बीस')">
+  <div class="number">26</div>
+  <div class="word">Twenty-Six<br><small>(छब्बीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('27', 'सत्ताईस')">
+  <div class="number">27</div>
+  <div class="word">Twenty-Seven<br><small>(सत्ताईस)</small></div>
+</div>
+<div class="number-card" onclick="speak('28', 'अट्ठाईस')">
+  <div class="number">28</div>
+  <div class="word">Twenty-Eight<br><small>(अट्ठाईस)</small></div>
+</div>
+<div class="number-card" onclick="speak('29', 'उनतीस')">
+  <div class="number">29</div>
+  <div class="word">Twenty-Nine<br><small>(उनतीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('30', 'तीस')">
+  <div class="number">30</div>
+  <div class="word">Thirty<br><small>(तीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('31', 'इकतीस')">
+  <div class="number">31</div>
+  <div class="word">Thirty-One<br><small>(इकतीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('32', 'बत्तीस')">
+  <div class="number">32</div>
+  <div class="word">Thirty-Two<br><small>(बत्तीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('33', 'तैंतीस')">
+  <div class="number">33</div>
+  <div class="word">Thirty-Three<br><small>(तैंतीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('34', 'चौंतीस')">
+  <div class="number">34</div>
+  <div class="word">Thirty-Four<br><small>(चौंतीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('35', 'पैंतीस')">
+  <div class="number">35</div>
+  <div class="word">Thirty-Five<br><small>(पैंतीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('36', 'छत्तीस')">
+  <div class="number">36</div>
+  <div class="word">Thirty-Six<br><small>(छत्तीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('37', 'सैंतीस')">
+  <div class="number">37</div>
+  <div class="word">Thirty-Seven<br><small>(सैंतीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('38', 'अड़तीस')">
+  <div class="number">38</div>
+  <div class="word">Thirty-Eight<br><small>(अड़तीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('39', 'उनतालीस')">
+  <div class="number">39</div>
+  <div class="word">Thirty-Nine<br><small>(उनतालीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('40', 'चालीस')">
+  <div class="number">40</div>
+  <div class="word">Forty<br><small>(चालीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('41', 'इकतालीस')">
+  <div class="number">41</div>
+  <div class="word">Forty-One<br><small>(इकतालीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('42', 'बयालीस')">
+  <div class="number">42</div>
+  <div class="word">Forty-Two<br><small>(बयालीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('43', 'तैंतालीस')">
+  <div class="number">43</div>
+  <div class="word">Forty-Three<br><small>(तैंतालीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('44', 'चवालीस')">
+  <div class="number">44</div>
+  <div class="word">Forty-Four<br><small>(चवालीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('45', 'पैंतालीस')">
+  <div class="number">45</div>
+  <div class="word">Forty-Five<br><small>(पैंतालीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('46', 'छियालीस')">
+  <div class="number">46</div>
+  <div class="word">Forty-Six<br><small>(छियालीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('47', 'सैंतालीस')">
+  <div class="number">47</div>
+  <div class="word">Forty-Seven<br><small>(सैंतालीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('48', 'अड़तालीस')">
+  <div class="number">48</div>
+  <div class="word">Forty-Eight<br><small>(अड़तालीस)</small></div>
+</div>
+<div class="number-card" onclick="speak('49', 'उनचास')">
+  <div class="number">49</div>
+  <div class="word">Forty-Nine<br><small>(उनचास)</small></div>
+</div>
+<div class="number-card" onclick="speak('50', 'पचास')">
+  <div class="number">50</div>
+  <div class="word">Fifty<br><small>(पचास)</small></div>
+</div>
+
+
+<div class="number-card" onclick="speak('51', 'इक्यावन')">
+  <div class="number">51</div>
+  <div class="word">Fifty-One<br><small>(इक्यावन)</small></div>
+</div>
+<div class="number-card" onclick="speak('52', 'बावन')">
+  <div class="number">52</div>
+  <div class="word">Fifty-Two<br><small>(बावन)</small></div>
+</div>
+<div class="number-card" onclick="speak('53', 'तिरेपन')">
+  <div class="number">53</div>
+  <div class="word">Fifty-Three<br><small>(तिरेपन)</small></div>
+</div>
+<div class="number-card" onclick="speak('54', 'चौवन')">
+  <div class="number">54</div>
+  <div class="word">Fifty-Four<br><small>(चौवन)</small></div>
+</div>
+<div class="number-card" onclick="speak('55', 'पचपन')">
+  <div class="number">55</div>
+  <div class="word">Fifty-Five<br><small>(पचपन)</small></div>
+</div>
+<div class="number-card" onclick="speak('56', 'छप्पन')">
+  <div class="number">56</div>
+  <div class="word">Fifty-Six<br><small>(छप्पन)</small></div>
+</div>
+<div class="number-card" onclick="speak('57', 'सत्तावन')">
+  <div class="number">57</div>
+  <div class="word">Fifty-Seven<br><small>(सत्तावन)</small></div>
+</div>
+<div class="number-card" onclick="speak('58', 'अट्ठावन')">
+  <div class="number">58</div>
+  <div class="word">Fifty-Eight<br><small>(अट्ठावन)</small></div>
+</div>
+<div class="number-card" onclick="speak('59', 'उनसठ')">
+  <div class="number">59</div>
+  <div class="word">Fifty-Nine<br><small>(उनसठ)</small></div>
+</div>
+<div class="number-card" onclick="speak('60', 'साठ')">
+  <div class="number">60</div>
+  <div class="word">Sixty<br><small>(साठ)</small></div>
+</div>
+<div class="number-card" onclick="speak('61', 'इकसठ')">
+  <div class="number">61</div>
+  <div class="word">Sixty-One<br><small>(इकसठ)</small></div>
+</div>
+<div class="number-card" onclick="speak('62', 'बासठ')">
+  <div class="number">62</div>
+  <div class="word">Sixty-Two<br><small>(बासठ)</small></div>
+</div>
+<div class="number-card" onclick="speak('63', 'तिरसठ')">
+  <div class="number">63</div>
+  <div class="word">Sixty-Three<br><small>(तिरसठ)</small></div>
+</div>
+<div class="number-card" onclick="speak('64', 'चौंसठ')">
+  <div class="number">64</div>
+  <div class="word">Sixty-Four<br><small>(चौंसठ)</small></div>
+</div>
+<div class="number-card" onclick="speak('65', 'पैंसठ')">
+  <div class="number">65</div>
+  <div class="word">Sixty-Five<br><small>(पैंसठ)</small></div>
+</div>
+<div class="number-card" onclick="speak('66', 'छियासठ')">
+  <div class="number">66</div>
+  <div class="word">Sixty-Six<br><small>(छियासठ)</small></div>
+</div>
+<div class="number-card" onclick="speak('67', 'सड़सठ')">
+  <div class="number">67</div>
+  <div class="word">Sixty-Seven<br><small>(सड़सठ)</small></div>
+</div>
+<div class="number-card" onclick="speak('68', 'अड़सठ')">
+  <div class="number">68</div>
+  <div class="word">Sixty-Eight<br><small>(अड़सठ)</small></div>
+</div>
+<div class="number-card" onclick="speak('69', 'उनहत्तर')">
+  <div class="number">69</div>
+  <div class="word">Sixty-Nine<br><small>(उनहत्तर)</small></div>
+</div>
+<div class="number-card" onclick="speak('70', 'सत्तर')">
+  <div class="number">70</div>
+  <div class="word">Seventy<br><small>(सत्तर)</small></div>
+</div>
+<div class="number-card" onclick="speak('71', 'इकहत्तर')">
+  <div class="number">71</div>
+  <div class="word">Seventy-One<br><small>(इकहत्तर)</small></div>
+</div>
+<div class="number-card" onclick="speak('72', 'बहत्तर')">
+  <div class="number">72</div>
+  <div class="word">Seventy-Two<br><small>(बहत्तर)</small></div>
+</div>
+<div class="number-card" onclick="speak('73', 'तिहत्तर')">
+  <div class="number">73</div>
+  <div class="word">Seventy-Three<br><small>(तिहत्तर)</small></div>
+</div>
+<div class="number-card" onclick="speak('74', 'चौहत्तर')">
+  <div class="number">74</div>
+  <div class="word">Seventy-Four<br><small>(चौहत्तर)</small></div>
+</div>
+<div class="number-card" onclick="speak('75', 'पचहत्तर')">
+  <div class="number">75</div>
+  <div class="word">Seventy-Five<br><small>(पचहत्तर)</small></div>
+</div>
+<div class="number-card" onclick="speak('76', 'छिहत्तर')">
+  <div class="number">76</div>
+  <div class="word">Seventy-Six<br><small>(छिहत्तर)</small></div>
+</div>
+<div class="number-card" onclick="speak('77', 'सतहत्तर')">
+  <div class="number">77</div>
+  <div class="word">Seventy-Seven<br><small>(सतहत्तर)</small></div>
+</div>
+<div class="number-card" onclick="speak('78', 'अठहत्तर')">
+  <div class="number">78</div>
+  <div class="word">Seventy-Eight<br><small>(अठहत्तर)</small></div>
+</div>
+<div class="number-card" onclick="speak('79', 'उन्यासी')">
+  <div class="number">79</div>
+  <div class="word">Seventy-Nine<br><small>(उन्यासी)</small></div>
+</div>
+<div class="number-card" onclick="speak('80', 'अस्सी')">
+  <div class="number">80</div>
+  <div class="word">Eighty<br><small>(अस्सी)</small></div>
+</div>
+<div class="number-card" onclick="speak('81', 'इक्यासी')">
+  <div class="number">81</div>
+  <div class="word">Eighty-One<br><small>(इक्यासी)</small></div>
+</div>
+<div class="number-card" onclick="speak('82', 'बयासी')">
+  <div class="number">82</div>
+  <div class="word">Eighty-Two<br><small>(बयासी)</small></div>
+</div>
+<div class="number-card" onclick="speak('83', 'तिरासी')">
+  <div class="number">83</div>
+  <div class="word">Eighty-Three<br><small>(तिरासी)</small></div>
+</div>
+<div class="number-card" onclick="speak('84', 'चौरासी')">
+  <div class="number">84</div>
+  <div class="word">Eighty-Four<br><small>(चौरासी)</small></div>
+</div>
+<div class="number-card" onclick="speak('85', 'पचासी')">
+  <div class="number">85</div>
+  <div class="word">Eighty-Five<br><small>(पचासी)</small></div>
+</div>
+<div class="number-card" onclick="speak('86', 'छियासी')">
+  <div class="number">86</div>
+  <div class="word">Eighty-Six<br><small>(छियासी)</small></div>
+</div>
+<div class="number-card" onclick="speak('87', 'सत्तासी')">
+  <div class="number">87</div>
+  <div class="word">Eighty-Seven<br><small>(सत्तासी)</small></div>
+</div>
+<div class="number-card" onclick="speak('88', 'अट्ठासी')">
+  <div class="number">88</div>
+  <div class="word">Eighty-Eight<br><small>(अट्ठासी)</small></div>
+</div>
+<div class="number-card" onclick="speak('89', 'नवासी')">
+  <div class="number">89</div>
+  <div class="word">Eighty-Nine<br><small>(नवासी)</small></div>
+</div>
+<div class="number-card" onclick="speak('90', 'नब्बे')">
+  <div class="number">90</div>
+  <div class="word">Ninety<br><small>(नब्बे)</small></div>
+</div>
+<div class="number-card" onclick="speak('91', 'इक्यानवे')">
+  <div class="number">91</div>
+  <div class="word">Ninety-One<br><small>(इक्यानवे)</small></div>
+</div>
+<div class="number-card" onclick="speak('92', 'बानवे')">
+  <div class="number">92</div>
+  <div class="word">Ninety-Two<br><small>(बानवे)</small></div>
+</div>
+<div class="number-card" onclick="speak('93', 'तिरेनवे')">
+  <div class="number">93</div>
+  <div class="word">Ninety-Three<br><small>(तिरेनवे)</small></div>
+</div>
+<div class="number-card" onclick="speak('94', 'चौरानवे')">
+  <div class="number">94</div>
+  <div class="word">Ninety-Four<br><small>(चौरानवे)</small></div>
+</div>
+<div class="number-card" onclick="speak('95', 'पंचानवे')">
+  <div class="number">95</div>
+  <div class="word">Ninety-Five<br><small>(पंचानवे)</small></div>
+</div>
+<div class="number-card" onclick="speak('96', 'छियानवे')">
+  <div class="number">96</div>
+  <div class="word">Ninety-Six<br><small>(छियानवे)</small></div>
+</div>
+<div class="number-card" onclick="speak('97', 'सत्तानवे')">
+  <div class="number">97</div>
+  <div class="word">Ninety-Seven<br><small>(सत्तानवे)</small></div>
+</div>
+<div class="number-card" onclick="speak('98', 'अट्ठानवे')">
+  <div class="number">98</div>
+  <div class="word">Ninety-Eight<br><small>(अट्ठानवे)</small></div>
+</div>
+<div class="number-card" onclick="speak('99', 'निन्यानवे')">
+  <div class="number">99</div>
+  <div class="word">Ninety-Nine<br><small>(निन्यानवे)</small></div>
+</div>
+<div class="number-card" onclick="speak('100', 'सौ')">
+  <div class="number">100</div>
+  <div class="word">Hundred<br><small>(सौ)</small></div>
+</div>
+  </div>
+
+  <button class="back-btn" onclick="history.back()">🔙 Back</button>
+
+  <script>
+    function speak(eng, hindi) {
+      const utterEng = new SpeechSynthesisUtterance(eng);
+      const utterHindi = new SpeechSynthesisUtterance(hindi);
+
+      utterEng.lang = 'en-US';
+      utterHindi.lang = 'hi-IN';
+
+      speechSynthesis.speak(utterEng);
+      setTimeout(() => speechSynthesis.speak(utterHindi), 700);
+    }
+  </script>
+
+</body>
+</html>

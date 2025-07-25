@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>हिंदी वर्णमाला टेस्ट | BalVidya</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <style>
+    .quiz-box {
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 15px;
+      background-color: #fff8dc;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .option-btn {
+      margin-bottom: 10px;
+    }
+    .correct {
+      background-color: #d4edda !important;
+    }
+    .wrong {
+      background-color: #f8d7da !important;
+    }
+    .timer {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #dc3545;
+    }
+  </style>
+</head>
+<body>
+  <div class="container text-center my-4">
+    <h2>🇮🇳 हिंदी वर्णमाला क्विज</h2>
+    <div class="quiz-box">
+      <div class="d-flex justify-content-between mb-2">
+        <span>⏳ टाइम: <span id="timer" class="timer">10</span>s</span>
+        <span>📊 स्कोर: <span id="score">0</span></span>
+      </div>
+      <h3 id="question"></h3>
+      <div id="options" class="d-grid gap-2 mt-3"></div>
+      <div id="feedback" class="my-2 fw-bold"></div>
+      <button id="nextBtn" class="btn btn-primary mt-3" onclick="nextQuestion()" disabled>अगला</button>
+    </div>
+    <button onclick="resetQuiz()" class="btn btn-warning mt-4">🔁 पुनः प्रारंभ</button>
+    <button onclick="goBack()" class="btn btn-secondary mt-2">⬅️ टेस्ट पर वापस जाएं</button>
+  </div>
+
+  <script>
+    const hindiLetters = [
+      { letter: "अ", word: "अनार" },
+      { letter: "आ", word: "आम" },
+      { letter: "इ", word: "इमली" },
+      { letter: "ई", word: "ईख" },
+      { letter: "उ", word: "उल्लू" },
+      { letter: "ऊ", word: "ऊँट" },
+      { letter: "ए", word: "एड़ी" },
+      { letter: "ऐ", word: "ऐनक" },
+      { letter: "ओ", word: "ओखली" },
+      { letter: "औ", word: "औजार" },
+      { letter: "क", word: "कमल" },
+      { letter: "ख", word: "खरगोश" },
+      { letter: "ग", word: "गमला" },
+      { letter: "घ", word: "घर" },
+      { letter: "च", word: "चमचम" },
+      { letter: "छ", word: "छतरी" },
+      { letter: "ज", word: "जल" },
+      { letter: "झ", word: "झंडा" },
+      { letter: "ट", word: "टोपी" },
+      { letter: "ठ", word: "ठेला" },
+      { letter: "ड", word: "डमरू" },
+      { letter: "ढ", word: "ढोल" },
+      { letter: "ण", word: "णख" },
+      { letter: "त", word: "तार" },
+      { letter: "थ", word: "थाली" },
+      { letter: "द", word: "दही" },
+      { letter: "ध", word: "धनुष" },
+      { letter: "न", word: "नाव" }
+    ];
+
+    let remainingLetters = [...hindiLetters];
+    let current = {};
+    let score = 0;
+    let timer;
+    let timeLeft = 10;
+
+    function speak(text) {
+      const msg = new SpeechSynthesisUtterance(text);
+      msg.lang = "hi-IN";
+      window.speechSynthesis.speak(msg);
+    }
+
+    function startTimer() {
+      timeLeft = 10;
+      document.getElementById("timer").innerText = timeLeft;
+      timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").innerText = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          document.getElementById("nextBtn").disabled = false;
+          document.getElementById("feedback").innerText = `⏱ समय समाप्त! उत्तर था: ${current.word}`;
+        }
+      }, 1000);
+    }
+
+    function nextQuestion() {
+      if (remainingLetters.length === 0) {
+        alert("🎉 क्विज समाप्त! कुल स्कोर: " + score);
+        resetQuiz();
+        return;
+      }
+
+      document.getElementById("feedback").innerText = "";
+      document.getElementById("nextBtn").disabled = true;
+
+      clearInterval(timer);
+      startTimer();
+
+      const randIndex = Math.floor(Math.random() * remainingLetters.length);
+      current = remainingLetters[randIndex];
+      remainingLetters.splice(randIndex, 1);
+
+      document.getElementById("question").innerText = `🔤 यह अक्षर क्या दर्शाता है: "${current.letter}"?`;
+      speak(current.letter);
+
+      let options = [current.word];
+      while (options.length < 4) {
+        let randomWord = hindiLetters[Math.floor(Math.random() * hindiLetters.length)].word;
+        if (!options.includes(randomWord)) {
+          options.push(randomWord);
+        }
+      }
+
+      options.sort(() => Math.random() - 0.5); // Shuffle
+
+      const optBtns = options.map(opt => `
+        <button class="btn btn-outline-dark option-btn" onclick="checkAnswer(this, '${opt}')">${opt}</button>
+      `).join("");
+
+      document.getElementById("options").innerHTML = optBtns;
+    }
+
+    function checkAnswer(btn, selected) {
+      clearInterval(timer);
+      document.querySelectorAll(".option-btn").forEach(b => b.disabled = true);
+
+      if (selected === current.word) {
+        score++;
+        btn.classList.add("correct");
+        document.getElementById("feedback").innerText = "✅ सही उत्तर!";
+      } else {
+        btn.classList.add("wrong");
+        document.getElementById("feedback").innerText = `❌ गलत! सही उत्तर: ${current.word}`;
+      }
+
+      document.getElementById("score").innerText = score;
+      document.getElementById("nextBtn").disabled = false;
+    }
+
+    function resetQuiz() {
+      score = 0;
+      remainingLetters = [...hindiLetters];
+      document.getElementById("score").innerText = 0;
+      nextQuestion();
+    }
+
+    function goBack() {
+      window.location.href = "test.html"; // Change this to your main test page
+    }
+
+    window.onload = () => {
+      resetQuiz();
+    };
+  </script>
+</body>
+</html>

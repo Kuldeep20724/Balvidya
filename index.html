@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BalVidya - Kids Learning App</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <style>
+    body {
+      background: #fffce8;
+      font-family: 'Poppins', 'Baloo 2', sans-serif;
+    }
+    .navbar {
+      background-color: #ffcc00;
+    }
+    .logo-text {
+      font-weight: bold;
+      font-size: 24px;
+      color: #4b0082;
+    }
+    .tagline {
+      font-size: 14px;
+      color: #444;
+    }
+    .section-card {
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .section-card:hover {
+      transform: scale(1.03);
+    }
+    .icon-box {
+      font-size: 40px;
+      color: #ff6600;
+    }
+    footer {
+      background: #ffe680;
+      padding: 10px;
+      text-align: center;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <span class="navbar-brand logo-text">🎓 BalVidya</span>
+      <span class="tagline d-none d-sm-inline">Fun Learning for Bright Minds</span>
+    </div>
+  </nav>
+
+  <!-- Hero Banner -->
+  <header class="py-4 text-center bg-light">
+    <h1 class="fw-bold text-primary">Welcome to BalVidya</h1>
+    <p class="lead">✨ Learn, Play, and Grow with Fun ✨</p>
+  </header>
+<!-- Coming Soon Modal -->
+<div class="modal fade" id="comingSoonModal" tabindex="-1" aria-labelledby="comingSoonLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center">
+      <div class="modal-header">
+        <h5 class="modal-title w-100" id="comingSoonLabel">🚧 Coming Soon</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Stories and Videos will be available in a future update.<br>Stay tuned! 🌟
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Sections -->
+  <main class="container my-4">
+    <div class="row g-4">
+
+      <div class="col-6 col-md-4">
+        <a href="sections/learn/learn.html" class="card section-card text-center p-3">
+          <div class="icon-box">📘</div>
+          <h5 class="mt-2">Learn</h5>
+          <p class="small text-muted">Letters, Numbers, Colors</p>
+        </a>
+      </div>
+
+      <div class="col-6 col-md-4">
+        <a href="sections/games/games.html" class="card section-card text-center p-3">
+          <div class="icon-box">🎮</div>
+          <h5 class="mt-2">Games</h5>
+          <p class="small text-muted">Playful puzzles & fun</p>
+        </a>
+      </div>
+
+     <div class="col-6 col-md-4">
+    <a href="#" class="card section-card text-center p-3" data-bs-toggle="modal" data-bs-target="#comingSoonModal">
+    <div class="icon-box">📖</div>
+    <h5 class="mt-2">Stories</h5>
+    <p class="small text-muted">Moral tales for kids</p>
+     </a>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <a href="#" class="card section-card text-center p-3" data-bs-toggle="modal" data-bs-target="#comingSoonModal">
+    <div class="icon-box">🎬</div>
+    <h5 class="mt-2">Videos</h5>
+    <p class="small text-muted">Rhymes & Bhajans</p>
+  </a>
+</div>
+
+
+      <div class="col-6 col-md-4">
+        <a href="sections/practice/test.html" class="card section-card text-center p-3">
+          <div class="icon-box">🧠</div>
+          <h5 class="mt-2">practice</h5>
+          <p class="small text-muted">Test knowledge playfully</p>
+        </a>
+      </div>
+
+      <div class="col-6 col-md-4">
+        <a href="about/about.html" class="card section-card text-center p-3">
+          <div class="icon-box">ℹ️</div>
+          <h5 class="mt-2">About</h5>
+          <p class="small text-muted">Know the creators</p>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    Made with ❤️ by Kuldeep Saini • © 2025 BalVidya
+  </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
